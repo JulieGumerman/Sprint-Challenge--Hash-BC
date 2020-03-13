@@ -13,12 +13,14 @@ def get_indices_of_item_weights(weights, length, limit):
         weight = weights[i]
         weight_two = limit - weight
         found_weight = hash_table_retrieve(ht, weight_two)
-        if found_weight:
+        if found_weight is not None:
             if i < found_weight:
                 return (found_weight, i)
             else:
                 return (i, found_weight)
-        #hash_table_insert(weight, )
+        hash_table_insert(ht, weight, i)
+    return None
+    
 
 
 
