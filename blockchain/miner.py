@@ -28,8 +28,10 @@ def proof_of_work(last_proof):
     proof = 0
 
     block_string = json.dumps(last_proof, sort_keys=True)
+    latest = f'{block_string}'.encode()
+    really_latest = hashlib.sha256(latest).hexdigest()
     
-    while valid_proof(block_string, proof) is False:
+    while valid_proof(really_latest, proof) is False:
         proof += 1
     return proof
 
@@ -46,8 +48,11 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
 
-    guess = f'{last_hash}{proof}'.encode()
+    #guess = f'{last_hash}{proof}'.encode()
+    guess = f'{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
+
+
 
     return guess_hash[:6] == last_hash[-6:]
 
